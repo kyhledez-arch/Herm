@@ -1,0 +1,223 @@
+/* Specialty reports remain separate from standard credit-bureau files. */
+.specialty-overview { margin-top: 25px; }
+.specialty-overview-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 23px 18px; }
+.specialty-overview-heading .eyebrow { font-size: 8px; margin-bottom: 7px; }
+.specialty-overview-heading h2 { font-size: 16px; font-weight: 550; color: #6c607c; }
+.specialty-overview-heading p:last-child { font-size: 10px; line-height: 1.8; color: #a192b2; margin-top: 7px; max-width: 620px; }
+.specialty-overview-heading > .quiet-link { flex-shrink: 0; font-size: 10px; }
+.specialty-overview-providers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid #eee9f4; }
+.specialty-overview-providers > button { display: flex; align-items: center; gap: 8px; text-align: left; min-width: 0; padding: 20px 14px; border-right: 1px solid #f0ebf6; }
+.specialty-overview-providers > button:last-child { border: 0; }
+.specialty-overview-providers > button:hover { background: #fcfaff; }
+.specialty-overview-providers > button > svg { color: #bba9cc; margin-left: auto; }
+.specialty-identity { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.specialty-provider-icon { display: grid; place-items: center; width: 42px; height: 44px; border: 1px solid #e7e8f2; border-radius: 10px; flex-shrink: 0; }
+.specialty-provider-icon--earlywarning { color: #8b9abf; background: #f0f2f9; border-color: #e7ebf5; }
+.specialty-provider-icon--datax { color: #b397a9; background: #f7f0f5; border-color: #f0e6ee; }
+.specialty-provider-icon--lexisnexis { color: #bc9b8f; background: #faf2ed; border-color: #f2e6df; }
+.specialty-provider-icon--worknumber { color: #88ab9b; background: #edf6f0; border-color: #e1eee6; }
+.specialty-identity > span:last-child { min-width: 0; }
+.specialty-identity strong { display: block; font-size: 17px; font-weight: 600; color: #655674; letter-spacing: -.35px; line-height: 1.4; }
+.specialty-identity > span > span { display: block; font-size: 9px; color: #a190af; margin-top: 4px; line-height: 1.65; }
+.specialty-identity--small { gap: 9px; }
+.specialty-identity--small .specialty-provider-icon { width: 33px; height: 35px; border-radius: 8px; }
+.specialty-identity--small strong { font-size: 11px; letter-spacing: -.1px; }
+.specialty-identity--small > span > span { font-size: 8px; }
+.specialty-directory { margin-top: 28px; }
+.specialty-directory .section-heading h2, .specialty-freeze-section .section-heading h2, .specialty-reports-section .section-heading h2 { font-size: 16px; color: #826d95; }
+.specialty-directory .complaint-section-description, .specialty-freeze-section .complaint-section-description, .specialty-reports-section .complaint-section-description { max-width: 830px; }
+.specialty-directory-grid, .specialty-freeze-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 21px; align-items: start; }
+.specialty-dispute-card { padding: 24px; }
+.specialty-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 11px; }
+.specialty-scope-tag { white-space: nowrap; flex-shrink: 0; border: 1px solid #eee7f6; border-radius: 5px; font-size: 8px; color: #aa96b8; background: #faf7fd; padding: 5px 6px; margin-top: 3px; }
+.specialty-provider-description { font-size: 11px; line-height: 1.9; color: #97839f; margin-top: 18px; }
+.specialty-route-field { margin-top: 20px; margin-bottom: 16px; }
+.specialty-route-field > label { font-size: 10px; }
+.specialty-route-field select { font-size: 10px; }
+.specialty-dispute-card .bureau-route-details { padding: 15px; }
+.specialty-dispute-card .bureau-route-details > .button { white-space: normal; font-size: 10px; }
+.specialty-process-note { display: flex; align-items: flex-start; gap: 7px; font-size: 9px; line-height: 1.85; color: #b09abd; margin-top: 17px; }
+.specialty-process-note > svg { margin-top: 2px; }
+.specialty-prepare-button { margin-top: 18px; font-size: 10px; white-space: normal; }
+.specialty-directory-actions { display: flex; align-items: center; justify-content: space-between; gap: 13px; margin-top: 17px; }
+.specialty-directory-actions .quiet-link { font-size: 9px; }
+.specialty-support-details { border-top: 1px solid #f0e8f6; margin-top: 20px; padding-top: 1px; }
+.specialty-support-details > summary { display: flex; justify-content: space-between; align-items: center; gap: 10px; list-style: none; cursor: pointer; padding: 15px 0 0; color: #ab8ebd; font-size: 9px; }
+.specialty-support-details > summary::-webkit-details-marker, .specialty-freeze-alternatives > summary::-webkit-details-marker { display: none; }
+.specialty-support-details > summary > span { display: flex; align-items: center; gap: 6px; }
+.specialty-support-details > summary > svg { transition: transform .2s; }
+.specialty-support-details[open] > summary > svg, .specialty-freeze-alternatives[open] > summary > svg { transform: rotate(180deg); }
+.specialty-support-details > div { padding-top: 15px; }
+.specialty-support-details p { font-size: 10px; line-height: 1.9; color: #ab93bc; margin: 11px 0; }
+.specialty-support-details .quiet-link { font-size: 9px; }
+.specialty-support-phone { display: inline-flex; gap: 7px; align-items: center; color: #9a7aaf; font-size: 13px; font-weight: 550; }
+.specialty-reports-section { margin-top: 30px; }
+.specialty-report-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.specialty-report-card { padding: 21px; }
+.specialty-report-card .specialty-identity--small strong { font-size: 14px; }
+.specialty-report-card .specialty-identity--small > span > span { font-size: 9px; }
+.specialty-report-file { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 22px 12px; background: #faf8fd; border: 1px solid #eee6f5; border-radius: 8px; margin-top: 19px; }
+.specialty-report-file > svg { color: #b299c7; margin-bottom: 14px; }
+.specialty-report-file strong { font-size: 11px; font-weight: 550; color: #9c7bb0; max-width: 100%; overflow-wrap: anywhere; }
+.specialty-report-file > span { font-size: 9px; color: #b89ac9; margin-top: 7px; }
+.specialty-report-actions { display: flex; gap: 5px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-top: 16px; }
+.specialty-report-actions .button { font-size: 9px; white-space: normal; }
+.specialty-report-dispute { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 9px; border-top: 1px solid #f0e7f7; margin-top: 18px; padding-top: 16px; }
+.specialty-freeze-section { margin-top: 30px; }
+.specialty-freeze-card { padding: 23px; }
+.specialty-freeze-type { display: inline-flex; flex-shrink: 0; white-space: nowrap; color: #91ac9d; background: #f0f7f1; border: 1px solid #e4eee7; padding: 5px 6px; border-radius: 5px; font-size: 7.5px; margin-top: 3px; }
+.specialty-freeze-type--contact { color: #c1a177; background: #fdf6ec; border-color: #f5ead8; }
+.specialty-freeze-card > h3 { color: #91729f; font-weight: 550; font-size: 13px; margin-top: 23px; }
+.specialty-freeze-description { color: #a48ab4; font-size: 11px; line-height: 1.9; margin-top: 10px; }
+.specialty-freeze-buttons { display: flex; flex-direction: column; align-items: flex-start; gap: 13px; margin-top: 20px; }
+.specialty-freeze-buttons > .button { font-size: 10px; white-space: normal; }
+.specialty-extra-link { font-size: 9px; }
+.specialty-freeze-caution { display: flex; align-items: flex-start; gap: 7px; padding: 13px; border: 1px solid #f1e6d8; border-radius: 8px; background: #fffaf4; color: #c1a383; margin-top: 20px; }
+.specialty-freeze-caution > svg { margin-top: 2px; }
+.specialty-freeze-caution p { font-size: 9px; line-height: 1.85; }
+.specialty-freeze-alternatives { margin-top: 19px; border-top: 1px solid #eee5f6; }
+.specialty-freeze-alternatives > summary { display: flex; align-items: center; justify-content: space-between; gap: 13px; list-style: none; cursor: pointer; font-size: 10px; color: #a184b4; padding-top: 15px; }
+.specialty-freeze-alternatives > summary > span { display: flex; align-items: center; gap: 7px; }
+.specialty-freeze-alternatives > summary > svg { transition: transform .2s; }
+.specialty-freeze-alternatives > div { padding-top: 16px; }
+.specialty-freeze-alternatives > div > p { color: #ab90bf; font-size: 10px; line-height: 1.9; margin-top: 11px; }
+.specialty-freeze-mail-form { margin-top: 15px; font-size: 9px; white-space: normal; }
+.specialty-freeze-source { margin-top: 15px; font-size: 9px; }
+.specialty-freeze-dispute { display: flex; flex-direction: column; gap: 8px; padding-top: 15px; margin-top: 17px; border-top: 1px solid #f0e7f7; }
+.specialty-freeze-dispute > span { font-size: 9px; color: #baa0cb; }
+.specialty-freeze-dispute > .quiet-link { font-size: 9px; }
+.specialty-footer-note { display: flex; align-items: flex-start; gap: 6px; font-size: 9px; color: #b29bc4; line-height: 1.8; margin-top: 15px; }
+.specialty-footer-note > svg { margin-top: 1px; }
+.specialty-page-intro { display: flex; align-items: flex-start; gap: 15px; background: #f1edf9; border: 1px solid #e8e1f4; border-radius: 10px; padding: 21px; color: #ad96c3; }
+.specialty-page-intro strong { font-size: 13px; font-weight: 550; color: #8e73a2; }
+.specialty-page-intro p { font-size: 11px; line-height: 1.9; color: #a48cb6; margin-top: 7px; }
+.specialty-page-controls { display: flex; gap: 18px; align-items: center; justify-content: space-between; margin-top: 24px; }
+.specialty-page-controls .pill-tabs { flex-shrink: 0; }
+.specialty-page-controls .input-with-icon { width: 270px; background: white; }
+.specialty-page-controls .pill-tabs button { font-size: 10px; }
+.specialty-wizard-heading { display: flex; justify-content: space-between; gap: 12px; margin-top: 23px; margin-bottom: 12px; }
+.specialty-wizard-heading strong { font-size: 10px; font-weight: 550; color: #9f83af; }
+.specialty-wizard-heading > span { font-size: 8px; color: #b99fca; }
+.specialty-wizard-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+.specialty-wizard-choice { position: relative; display: flex; gap: 9px; align-items: flex-start; border: 1px solid #e8dff1; background: #fff; border-radius: 8px; text-align: left; padding: 15px 30px 15px 12px; min-width: 0; }
+.specialty-wizard-choice.selected { border-color: #b69ad9; background: #fcf8ff; box-shadow: 0 0 0 1px #b69ad9; }
+.specialty-wizard-initial { width: 26px; height: 28px; display: grid; place-items: center; border-radius: 6px; flex-shrink: 0; font-size: 8px; font-weight: 600; border: 1px solid transparent; }
+.specialty-wizard-choice > span:nth-child(2) { min-width: 0; }
+.specialty-wizard-choice strong { display: block; font-size: 10px; color: #9b7bae; font-weight: 550; line-height: 1.6; }
+.specialty-wizard-choice > span > span { display: block; font-size: 8px; color: #b898cb; margin-top: 4px; line-height: 1.7; }
+.specialty-wizard-choice .choice-checkbox { top: 18px; right: 10px; width: 14px; height: 14px; }
+.specialty-inline-name { font-size: 17px; font-weight: 550; color: #9b82b1; letter-spacing: -.3px; }
+.specialty-inline-mark { display: grid; place-items: center; color: #b49ccd; background: #f6eefb; border-radius: 5px; width: 24px; height: 26px; }
+.specialty-dispute-context { display: flex; align-items: flex-start; gap: 8px; padding: 14px; background: #f6f2fb; border: 1px solid #eee4f7; border-radius: 8px; color: #ae92c4; margin-bottom: 23px; }
+.specialty-dispute-context > svg { margin-top: 2px; }
+.specialty-dispute-context p { color: #a58ab7; font-size: 10px; line-height: 1.9; }
+.specialty-dispute-context strong { font-weight: 550; color: #9771ad; }
+.bureau-table-name--earlywarning { color: #8495b9; }
+.bureau-table-name--datax { color: #ac8aa8; }
+.bureau-table-name--lexisnexis { color: #b39486; }
+.bureau-table-name--worknumber { color: #80a393; }
+@media (max-width: 1250px) {
+  .specialty-card-top { flex-wrap: wrap; gap: 12px; }
+  .specialty-scope-tag, .specialty-freeze-type { margin-left: 54px; margin-top: -6px; }
+  .specialty-overview-providers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .specialty-overview-providers > button { padding: 17px; border-bottom: 1px solid #f0eaf6; }
+  .specialty-overview-providers > button:nth-child(2) { border-right: 0; }
+  .specialty-overview-providers > button:nth-child(3), .specialty-overview-providers > button:nth-child(4) { border-bottom: 0; }
+  .specialty-directory-actions { flex-wrap: wrap; }
+}
+@media (max-width: 800px) {
+  .specialty-page-controls { flex-wrap: wrap; }
+  .specialty-page-controls .input-with-icon { flex: 1; min-width: 210px; }
+}
+@media (max-width: 620px) {
+  .specialty-overview-heading { padding: 19px 17px; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .specialty-overview-heading h2 { font-size: 14px; }
+  .specialty-overview-heading p:last-child { font-size: 9px; }
+  .specialty-overview-heading > .quiet-link { font-size: 9px; }
+  .specialty-overview-providers > button { padding: 15px 12px; gap: 4px; }
+  .specialty-identity--small strong { font-size: 10px; }
+  .specialty-identity--small > span > span { font-size: 7px; }
+  .specialty-identity--small .specialty-provider-icon { width: 27px; height: 30px; }
+  .specialty-identity--small { gap: 7px; }
+  .specialty-directory-grid, .specialty-freeze-grid, .specialty-report-grid { grid-template-columns: 1fr; gap: 17px; }
+  .specialty-dispute-card, .specialty-freeze-card { padding: 21px 18px; }
+  .specialty-identity strong { font-size: 16px; }
+  .specialty-identity > span > span { font-size: 8.5px; }
+  .specialty-provider-icon { width: 36px; height: 40px; }
+  .specialty-identity { gap: 10px; }
+  .specialty-scope-tag, .specialty-freeze-type { margin-left: 46px; font-size: 7px; }
+  .specialty-directory .section-heading h2, .specialty-freeze-section .section-heading h2, .specialty-reports-section .section-heading h2 { font-size: 14px; }
+  .specialty-provider-description, .specialty-freeze-description { font-size: 10.5px; }
+  .specialty-process-note { font-size: 8.5px; }
+  .specialty-prepare-button { font-size: 10px; }
+  .specialty-report-card { padding: 19px; }
+  .specialty-report-card .specialty-identity--small strong { font-size: 14px; }
+  .specialty-page-intro { padding: 18px; gap: 12px; }
+  .specialty-page-intro strong { font-size: 12px; }
+  .specialty-page-intro p { font-size: 10px; }
+  .specialty-page-controls { gap: 13px; }
+  .specialty-page-controls .pill-tabs { flex-shrink: 1; width: 100%; }
+  .specialty-page-controls .pill-tabs button { flex: 1; font-size: 9px; }
+  .specialty-page-controls .input-with-icon { width: 100%; }
+  .specialty-wizard-heading { flex-direction: column; gap: 5px; }
+  .specialty-wizard-heading > span { font-size: 8px; }
+  .specialty-wizard-grid { gap: 9px; }
+  .specialty-wizard-choice { padding: 13px 21px 12px 10px; flex-wrap: wrap; gap: 7px; }
+  .specialty-wizard-choice > span:nth-child(2) { flex: 1 1 100%; }
+  .specialty-wizard-choice .choice-checkbox { top: 18px; right: 9px; }
+  .specialty-wizard-choice strong { font-size: 9px; }
+  .specialty-wizard-choice > span > span { font-size: 7.5px; }
+  .specialty-dispute-context p { font-size: 9.5px; }
+}
+/* Improve specialty card button readability only. */
+.specialty-dispute-card .button-secondary,
+.specialty-report-card .button-secondary,
+.specialty-report-card .button-ghost,
+.specialty-freeze-card .button-secondary,
+.specialty-freeze-card .quiet-link,
+.specialty-directory-actions .quiet-link,
+.specialty-support-details .quiet-link,
+.specialty-freeze-source,
+.specialty-extra-link,
+.specialty-freeze-dispute > .quiet-link,
+.chex-directory-links > a,
+.chex-view-disputes,
+.chex-report-dispute,
+.chex-freeze-actions > .quiet-link,
+.chex-freeze-dispute-link > .quiet-link {
+  color: #7a5aa4;
+}
+.specialty-dispute-card .button-secondary:hover,
+.specialty-report-card .button-secondary:hover,
+.specialty-report-card .button-ghost:hover,
+.specialty-freeze-card .button-secondary:hover,
+.specialty-freeze-card .quiet-link:hover,
+.specialty-directory-actions .quiet-link:hover,
+.specialty-support-details .quiet-link:hover,
+.specialty-freeze-source:hover,
+.specialty-extra-link:hover,
+.specialty-freeze-dispute > .quiet-link:hover,
+.chex-directory-links > a:hover,
+.chex-view-disputes:hover,
+.chex-report-dispute:hover,
+.chex-freeze-actions > .quiet-link:hover,
+.chex-freeze-dispute-link > .quiet-link:hover {
+  color: #5f4290;
+}
+/* Improve readability for “Open … portal/options” style buttons only. */
+.specialty-freeze-buttons .button-primary,
+.specialty-dispute-card .bureau-route-details .button-primary,
+.chex-freeze-actions .button-primary,
+.chex-dispute-card .bureau-route-details .button-primary,
+.directory-company-drawer .button-primary.request-official-link {
+  color: #ffffff;
+  text-shadow: 0 1px 0 rgba(54, 31, 89, 0.18);
+}
+.specialty-freeze-buttons .button-primary:hover,
+.specialty-dispute-card .bureau-route-details .button-primary:hover,
+.chex-freeze-actions .button-primary:hover,
+.chex-dispute-card .bureau-route-details .button-primary:hover,
+.directory-company-drawer .button-primary.request-official-link:hover {
+  color: #ffffff;
+}
+@media (max-height: 980px) and (min-width: 801px) { .sidebar-guide { display: none; } }

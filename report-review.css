@@ -1,0 +1,49 @@
+/* Item selection from an uploaded consumer report. */
+.report-review-drawer .detail-body { padding-top: 18px; }
+.report-review-tabs { padding: 0 26px; gap: 20px; flex-wrap: wrap; }
+.report-review-tabs .tab { font-size: 10.5px; }
+.report-review-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 13px 15px; background: #f7f4fc; border: 1px solid #eee7f7; border-radius: 8px; margin-bottom: 20px; color: #9b86b1; font-size: 11px; }
+.report-review-toolbar > div { display: flex; gap: 15px; align-items: center; }
+.report-review-toolbar .quiet-link { font-size: 10px; display: inline-flex; align-items: center; gap: 4px; }
+.report-item-group { margin-bottom: 24px; }
+.report-item-group > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 11px; border-bottom: 1px solid #f0e8f6; }
+.report-item-group > header > span { font-size: 9px; color: #bda9cc; }
+.report-group-select { display: flex; align-items: center; gap: 9px; padding: 0; }
+.report-group-select h3 { font-size: 12.5px; font-weight: 600; color: #8d6f9e; }
+.report-item-row { display: flex; align-items: center; gap: 10px; padding: 12px 12px 12px 6px; border-bottom: 1px solid #f5eef9; border-radius: 7px; }
+.report-item-row:hover { background: #fcfaff; }
+.report-item-row.selected { background: #f7f1fd; }
+.report-item-pick { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; cursor: pointer; }
+.report-item-pick input { width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--primary); margin: 0; }
+.report-item-icon { width: 29px; height: 31px; display: grid; place-items: center; border-radius: 7px; background: #f2ecfa; color: #a98cc4; flex-shrink: 0; }
+.report-item-text { min-width: 0; }
+.report-item-text strong { display: block; font-size: 11.5px; font-weight: 550; color: #6f5c7c; overflow-wrap: anywhere; }
+.report-item-text > span { display: block; font-size: 9.5px; color: #ab94bb; margin-top: 4px; overflow-wrap: anywhere; }
+.report-item-dispute { flex-shrink: 0; font-size: 10px; }
+.report-review-actions { display: flex; align-items: center; gap: 15px; padding: 17px 15px; background: #f1ecfa; border: 1px solid #e8dff4; border-radius: 9px; margin-top: 4px; }
+.report-review-actions > div { flex: 1; }
+.report-review-actions h4 { font-size: 11.5px; font-weight: 550; color: #8b6ba0; }
+.report-review-actions p { font-size: 10px; color: #ab90c0; margin-top: 5px; }
+.report-confirm { padding: 4px 0; }
+.report-confirm > h3 { font-size: 15px; font-weight: 550; color: #8a6a9c; }
+.report-confirm-summary { display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0 22px; }
+.report-confirm-summary span { padding: 5px 8px; background: #f4eefb; border: 1px solid #ebe1f6; border-radius: 5px; color: #9c7cba; font-size: 10px; }
+.report-confirm .bureau-selection-grid { margin-bottom: 18px; }
+.report-confirm .field { margin-bottom: 18px; }
+.report-confirm-list { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 18px; }
+.report-confirm-list .bureau-choice { padding: 11px 13px; border-radius: 7px; }
+.report-review-button { margin-top: 9px; white-space: normal; }
+.document-review-link { font-size: 9.5px; display: inline-flex; align-items: center; gap: 4px; margin-right: 4px; }
+.empty-state-actions { display: flex; gap: 9px; flex-wrap: wrap; justify-content: center; }
+@media (max-width: 620px) {
+  .report-review-tabs { padding: 0 20px; gap: 15px; }
+  .report-review-toolbar { flex-wrap: wrap; }
+  .report-review-toolbar > div { width: 100%; justify-content: space-between; }
+  .report-item-row { flex-wrap: wrap; gap: 8px; padding-left: 4px; }
+  .report-item-pick { flex: 1 1 100%; }
+  .report-item-dispute { margin-left: 39px; }
+  .report-review-actions { flex-direction: column; align-items: stretch; }
+  .report-confirm .bureau-selection-grid { grid-template-columns: 1fr; }
+  .report-confirm-list { gap: 7px; }
+  .report-confirm-list .bureau-choice { width: 100%; }
+}

@@ -1,0 +1,40 @@
+import assert from 'node:assert/strict';
+const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:3000';
+async function session() { const response = await fetch(`${base}/api/workspace`); assert.equal(response.status, 200); return { cookie: response.headers.get('set-cookie').split(';')[0], data: await response.json() }; }
+async function req(cookie, path, method = 'GET', body, expected = 200) {
+  const response = await fetch(`${base}${path}`, { method, headers: { Cookie: cookie, 'Content-Type': 'application/json' }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
+  const result = await response.json(); assert.equal(response.status, expected, `${method} ${path}: ${result.error || 'ok'}`); return result;
+}
+const first = await session(), other = await session();
+const input = { bureaus: ['experian', 'equifax', 'transunion', 'innovis'], creditor: 'Example Mail Account', accountLast4: '1234', category: 'Account information', reason: 'Incorrect account balance', details: 'Fictional test: the credit report balance differs from my account statement and should be investigated and corrected.', requestedAction: 'Correct the inaccurate information', submissionMethod: 'mail', confirmed: true };
+await req(first.cookie, '/api/disputes', 'POST', { ...input, submissionMethod: 'anonymous_online' }, 400);
+const created = await req(first.cookie, '/api/disputes', 'POST', input, 201), ids = created.createdIds;
+assert.equal(ids.length, 4); assert.ok(ids.every(id => created.disputes.find(d => d.id === id).submissionMethod === 'mail'));
+const id = ids[0];
+await req(other.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'set_method', submissionMethod: 'phone' }, 404);
+await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'set_method', submissionMethod: 'invalid' }, 400);
+const changed = await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'set_method', submissionMethod: 'phone' }); assert.equal(changed.disputes.find(d => d.id === id).submissionMethod, 'phone');
+await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'set_method', submissionMethod: 'mail' });
+const letter = await fetch(`${base}/api/disputes/${id}/letter`, { headers: { Cookie: first.cookie } }); assert.equal(letter.status, 200); assert.ok(Buffer.from(await letter.arrayBuffer()).subarray(0, 5).toString() === '%PDF-');
+const daysAgo = days => new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
+const sentDate = daysAgo(3), receivedDate = daysAgo(1);
+await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { status: 'in_review', submissionMethod: 'mail', submittedAt: sentDate }, 400);
+await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { status: 'in_review', submissionMethod: 'mail', submittedAt: sentDate, receivedAt: receivedDate, actualSubmissionConfirmed: true }, 400);
+const mailed = await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { status: 'in_review', submissionMethod: 'mail', submittedAt: sentDate, actualSubmissionConfirmed: true, reference: 'FICTIONAL-POST-001' });
+const mailedRow = mailed.disputes.find(d => d.id === id); assert.equal(mailedRow.receivedAt, null); assert.equal(mailedRow.dueAt, null); assert.equal(mailedRow.submissionMethod, 'mail');
+const loaded = await req(first.cookie, '/api/workspace'); assert.equal(loaded.disputes.find(d => d.id === id).submissionMethod, 'mail');
+await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'set_method', submissionMethod: 'online' }, 400);
+await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'record_delivery', receivedAt: receivedDate, receivedAtConfirmed: false }, 400);
+await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'record_delivery', receivedAt: daysAgo(4), receivedAtConfirmed: true }, 400);
+await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'record_delivery', receivedAt: '2026-02-31', receivedAtConfirmed: true }, 400);
+const delivered = await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'record_delivery', receivedAt: receivedDate, receivedAtConfirmed: true });
+const deliveredRow = delivered.disputes.find(d => d.id === id); assert.equal(deliveredRow.receivedAt.slice(0, 10), receivedDate); assert.equal((new Date(deliveredRow.dueAt) - new Date(deliveredRow.receivedAt)) / 86400000, 30);
+assert.notEqual((new Date(deliveredRow.dueAt) - new Date(deliveredRow.submittedAt)) / 86400000, 30);
+const phoneId = ids[1]; await req(first.cookie, `/api/disputes/${phoneId}`, 'PATCH', { action: 'set_method', submissionMethod: 'phone' });
+const phone = await req(first.cookie, `/api/disputes/${phoneId}`, 'PATCH', { status: 'in_review', submissionMethod: 'phone', submittedAt: receivedDate, actualSubmissionConfirmed: true }); const phoneRow = phone.disputes.find(d => d.id === phoneId); assert.equal(phoneRow.receivedAt, phoneRow.submittedAt); assert.ok(phoneRow.dueAt);
+await req(first.cookie, `/api/disputes/${phoneId}`, 'PATCH', { action: 'record_delivery', receivedAt: receivedDate, receivedAtConfirmed: true }, 400);
+const inlineReceivedId = ids[2]; const inlineReceived = await req(first.cookie, `/api/disputes/${inlineReceivedId}`, 'PATCH', { status: 'in_review', submissionMethod: 'mail', submittedAt: sentDate, receivedAt: receivedDate, receivedAtConfirmed: true, actualSubmissionConfirmed: true }); assert.ok(inlineReceived.disputes.find(d => d.id === inlineReceivedId).dueAt);
+const normal = await req(first.cookie, '/api/disputes', 'POST', { ...input, bureaus: ['innovis'], submissionMethod: 'online' }, 201); const onlineId = normal.createdIds[0];
+const online = await req(first.cookie, `/api/disputes/${onlineId}`, 'PATCH', { status: 'in_review', submittedAt: receivedDate, actualSubmissionConfirmed: true }); assert.equal(online.disputes.find(d => d.id === onlineId).submissionMethod, 'online'); assert.ok(online.disputes.find(d => d.id === onlineId).dueAt);
+const cleared = await req(first.cookie, '/api/workspace', 'DELETE', { confirm: 'START FRESH' }); assert.equal(cleared.disputes.length, 0);
+console.log('PASS: four-bureau no-login drafts, saved method changes, cross-workspace protection, addressed PDF, mail/phone/online recording, delivery validation, and receipt-based reminders.');

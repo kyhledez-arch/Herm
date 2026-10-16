@@ -1,0 +1,121 @@
+/* CFPB and BBB are independent complaint channels, not bureau disputes. */
+.complaint-options { margin-top: 28px; }
+.complaint-section-description { color: #9690a5; font-size: 10.5px; line-height: 1.7; margin-top: 5px; }
+.complaint-channel-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.complaint-channel-card { padding: 23px; position: relative; }
+.complaint-channel-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.complaint-mark { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.complaint-mark-icon { width: 39px; height: 41px; display: grid; place-items: center; flex-shrink: 0; color: #4f8977; background: #edf5f1; border: 1px solid #e0eee7; border-radius: 9px; }
+.complaint-mark--bbb .complaint-mark-icon { color: #5385a5; background: #ecf3f9; border-color: #dfebf5; }
+.complaint-mark > span:last-child { min-width: 0; }
+.complaint-mark strong { display: block; font-size: 22px; font-weight: 680; letter-spacing: -.5px; color: #306e5f; line-height: 1.2; }
+.complaint-mark--bbb strong { color: #356b8b; }
+.complaint-mark > span > span { display: block; font-size: 9px; color: #90909b; line-height: 1.5; margin-top: 4px; }
+.channel-role { display: inline-flex; align-items: center; border: 1px solid #ece8f1; background: #faf9fc; color: #9a90a6; border-radius: 5px; padding: 4px 6px; font-size: 8px; flex-shrink: 0; white-space: nowrap; }
+.complaint-channel-description { margin-top: 19px; font-size: 11.5px; line-height: 1.85; color: #8d839c; min-height: 62px; }
+.complaint-channel-timeline { display: flex; gap: 8px; align-items: flex-start; padding: 12px 13px; margin-top: 16px; background: #f7f9f8; border-radius: 7px; color: #7b9c8c; }
+.complaint-channel-card--bbb .complaint-channel-timeline { background: #f5f8fb; color: #829bb4; }
+.complaint-channel-timeline > svg { margin-top: 2px; }
+.complaint-channel-timeline > p { font-size: 10px; line-height: 1.75; color: #8c9293; }
+.complaint-channel-guidance { color: #a28fae; font-size: 10px; line-height: 1.85; padding: 14px 0 0; }
+.complaint-channel-actions { display: flex; align-items: center; justify-content: space-between; gap: 11px; margin-top: 21px; flex-wrap: wrap; }
+.complaint-channel-actions .button { font-size: 10.5px; }
+.complaint-channel-actions > .quiet-link { font-size: 9.5px; color: #a18caf; }
+.complaint-channel-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-top: 1px solid #f0eaf5; padding-top: 14px; margin-top: 20px; font-size: 9px; color: #ac98ba; }
+.complaint-channel-foot > a { display: flex; align-items: center; gap: 4px; }
+.complaint-options-note { display: flex; align-items: flex-start; gap: 6px; font-size: 9px; line-height: 1.8; color: #b09bc0; margin-top: 12px; }
+.complaint-options-note > svg { margin-top: 1px; }
+.complaint-options--compact .complaint-channel-card { padding: 20px; }
+.complaint-options--compact .complaint-channel-description { font-size: 10.5px; min-height: 39px; margin-top: 15px; }
+.complaint-options--compact .complaint-channel-actions { margin-top: 17px; }
+.complaint-options--compact .complaint-mark strong { font-size: 20px; }
+.complaint-options--compact .complaint-mark-icon { width: 35px; height: 36px; }
+.complaint-list-card { margin-top: 26px; }
+.complaint-list-card .card-heading { padding-bottom: 18px; border-bottom: 1px solid #eee9f4; }
+.complaints-manual-label { color: #ada0b9; font-size: 9px; }
+.complaint-table { min-width: 680px; }
+.complaint-channel-name { font-weight: 600; font-size: 10px; letter-spacing: .1px; color: #669785; }
+.complaint-channel-name--bbb { color: #7696b2; }
+.complaint-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.complaint-choice { position: relative; display: flex; flex-direction: column; align-items: flex-start; padding: 20px 18px; border: 1px solid #e9e1f2; border-radius: 9px; text-align: left; }
+.complaint-choice.selected { background: #fcf9ff; border-color: #bba3df; box-shadow: 0 0 0 1px #bba3df; }
+.complaint-choice .choice-checkbox { top: 12px; right: 12px; }
+.complaint-choice .complaint-mark { padding-right: 7px; }
+.complaint-choice .complaint-mark strong { font-size: 22px; }
+.complaint-choice .complaint-mark > span > span { font-size: 8.5px; }
+.complaint-choice > .channel-role { margin-top: 16px; }
+.complaint-choice > p { color: #92819e; font-size: 10.5px; line-height: 1.85; margin-top: 12px; }
+.complaint-official-links { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 19px; }
+.complaint-privacy-warning { margin-top: 23px; }
+.complaint-privacy-warning p { color: #b09278; }
+.complaint-related-link { display: flex; align-items: center; gap: 7px; padding: 13px 12px; border: 1px solid #eee3f5; border-radius: 7px; background: #fcf8ff; width: 100%; text-align: left; margin-top: 16px; color: #ae8ec3; font-size: 10px; }
+.complaint-related-link > span { flex: 1; }
+.complaint-outcome { padding: 15px; background: #f7faf6; border: 1px solid #e8eee5; border-radius: 8px; }
+.complaint-detail .detail-actions { flex-wrap: wrap; }
+.complaint-detail .detail-actions .button { font-size: 10px; }
+.complaint-detail .detail-meta dd { overflow-wrap: anywhere; max-width: 70%; }
+.complaint-letter .complaint-draft-text { white-space: pre-wrap; line-height: 2; }
+.dispute-complaint-options { margin-top: 19px; padding: 14px; background: #faf7fd; border: 1px solid #eee6f6; border-radius: 8px; }
+.dispute-complaint-options > div:first-child strong { display: block; font-size: 11px; color: #9680a4; font-weight: 550; }
+.dispute-complaint-options > div:first-child > span { display: block; font-size: 9.5px; color: #b199bf; line-height: 1.7; margin-top: 4px; }
+.dispute-complaint-options > div:last-child { display: flex; gap: 9px; margin-top: 11px; }
+.dispute-complaint-options .button { font-size: 10px; padding: 8px 11px; min-height: 33px; }
+.dispute-escalation { padding: 18px; border: 1px solid #eee3f7; background: #fbf8fe; border-radius: 9px; margin-top: 28px; }
+.dispute-escalation h3 { font-size: 12px; font-weight: 550; color: #9d7aaf; }
+.dispute-escalation p { color: #b095c1; font-size: 10px; line-height: 1.85; margin-top: 7px; }
+.dispute-escalation > div { display: flex; gap: 9px; margin-top: 14px; }
+.dispute-escalation .button { font-size: 10px; flex: 1; min-width: 0; }
+.settings-data-count { flex-wrap: wrap; }
+.topbar-left, .breadcrumb { min-width: 0; }
+@media (max-width: 1250px) {
+  .complaint-channel-top { flex-wrap: wrap; }
+  .complaint-channel-top > .channel-role { margin-left: 49px; margin-top: -5px; }
+  .complaint-options--compact .complaint-channel-top > .channel-role { margin-left: 45px; }
+  .complaint-channel-actions { gap: 13px; }
+}
+@media (max-width: 800px) {
+  .complaint-mark strong { font-size: 20px; }
+  .complaint-channel-card { padding: 20px; }
+  .complaint-channel-description { font-size: 11px; }
+}
+@media (max-width: 620px) {
+  .complaint-channel-grid { grid-template-columns: 1fr; gap: 14px; }
+  .complaint-options { margin-top: 25px; }
+  .complaint-options .section-heading { align-items: flex-start; }
+  .complaint-options .section-heading > .quiet-link { flex-shrink: 0; font-size: 9px; margin-top: 3px; }
+  .complaint-section-description { font-size: 9px; max-width: 235px; }
+  .complaint-channel-top { flex-wrap: nowrap; gap: 8px; }
+  .complaint-channel-top > .channel-role, .complaint-options--compact .complaint-channel-top > .channel-role { margin: 0; font-size: 7px; }
+  .complaint-mark { gap: 8px; }
+  .complaint-mark > span > span { font-size: 8px; max-width: 150px; }
+  .complaint-mark-icon { width: 34px; height: 37px; }
+  .complaint-channel-description { min-height: 0; font-size: 10.5px; }
+  .complaint-channel-actions .button { font-size: 10px; padding: 9px 10px; }
+  .complaint-channel-actions > .quiet-link { font-size: 9px; }
+  .complaint-options-note { font-size: 8px; }
+  .complaint-choice-grid { grid-template-columns: 1fr; gap: 13px; }
+  .complaint-choice { padding: 18px; }
+  .complaint-choice .complaint-mark > span > span { max-width: none; }
+  .complaint-choice > .channel-role { position: absolute; top: 21px; right: 44px; margin: 0; font-size: 7px; }
+  .complaint-choice > p { margin-top: 13px; font-size: 10px; }
+  .complaint-choice .choice-checkbox { top: 22px; right: 17px; }
+  .complaint-official-links { gap: 17px; }
+  .complaint-official-links .quiet-link { font-size: 9px; }
+  .complaint-form-modal .form-grid { grid-template-columns: 1fr; }
+  .complaint-form-modal .review-item p { font-size: 10.5px; }
+  .complaint-form-modal .check-label { font-size: 10px; }
+  .complaint-detail .record-action { align-items: stretch; }
+  .complaint-detail .record-action > .button { align-self: stretch; }
+  .complaint-detail .detail-actions { flex-direction: column; }
+  .complaint-detail .detail-actions .button { font-size: 11px; }
+  .complaint-detail .detail-meta dd { max-width: 64%; font-size: 10px; }
+  .complaint-detail .detail-meta dt { font-size: 9px; }
+  .complaint-detail .detail-meta > div { gap: 10px; }
+  .complaint-detail .draft-toolbar { font-size: 9px; }
+  .complaint-detail .draft-toolbar .quiet-link { font-size: 9px; }
+  .complaint-detail .detail-explanation p { font-size: 11px; }
+  .complaint-table { min-width: 640px; }
+  .dispute-complaint-options .button { font-size: 9px; }
+  .dispute-escalation { padding: 15px; }
+  .breadcrumb strong { max-width: 155px; overflow: hidden; text-overflow: ellipsis; }
+}

@@ -1,0 +1,43 @@
+import assert from 'node:assert/strict';
+import { PDFDocument } from 'pdf-lib';
+const base = process.env.TEST_BASE_URL || 'http://127.0.0.1:3000';
+async function session() { const response = await fetch(`${base}/api/workspace`); assert.equal(response.status, 200); return { cookie: response.headers.get('set-cookie').split(';')[0], data: await response.json() }; }
+async function req(cookie, path, method = 'GET', body, expected = 200) {
+  const response = await fetch(`${base}${path}`, { method, headers: { Cookie: cookie, ...(body instanceof FormData ? {} : { 'Content-Type': 'application/json' }) }, ...(body === undefined ? {} : { body: body instanceof FormData ? body : JSON.stringify(body) }) });
+  const result = await response.json(); assert.equal(response.status, expected, `${method} ${path}: ${result.error || 'ok'}`); return result;
+}
+const first = await session(), other = await session();
+const input = { bureaus: ['chexsystems'], creditor: 'Example Community Bank', accountLast4: '4321', category: 'Checking / savings account history', reason: 'Incorrect overdraft or unpaid balance', details: 'Fictional test: my closed checking account is incorrectly reported with an unpaid balance. The bank’s closing statement shows a zero balance. Please investigate this discrepancy.', requestedAction: 'Correct the inaccurate information', submissionMethod: 'mail', confirmed: true };
+await req(first.cookie, '/api/disputes', 'POST', { ...input, bureaus: ['unsupported'] }, 400);
+await req(first.cookie, '/api/disputes', 'POST', { ...input, confirmed: false }, 400);
+const created = await req(first.cookie, '/api/disputes', 'POST', input, 201); const id = created.createdIds[0];
+assert.equal(created.createdIds.length, 1); const row = created.disputes.find(d => d.id === id); assert.equal(row.bureau, 'chexsystems'); assert.equal(row.category, input.category); assert.equal(row.submissionMethod, 'mail'); assert.equal(row.status, 'draft');
+assert.ok(created.activities.some(a => a.disputeId === id && a.description.includes('ChexSystems')));
+const reloaded = await req(first.cookie, '/api/workspace'); assert.equal(reloaded.disputes.find(d => d.id === id).bureau, 'chexsystems');
+await req(other.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'set_method', submissionMethod: 'online' }, 404);
+const edited = await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'edit', ...input, details: `${input.details} Additional fictional evidence is available.` }); assert.ok(edited.disputes.find(d => d.id === id).details.includes('Additional fictional'));
+const letter = await fetch(`${base}/api/disputes/${id}/letter`, { headers: { Cookie: first.cookie } }); assert.equal(letter.status, 200); assert.ok(letter.headers.get('content-disposition').includes('chexsystems-dispute-draft')); const bytes = new Uint8Array(await letter.arrayBuffer()); const letterPdf = await PDFDocument.load(bytes); assert.equal(letterPdf.getTitle(), 'ChexSystems Banking Report Dispute');
+assert.equal((await fetch(`${base}/api/disputes/${id}/letter`, { headers: { Cookie: other.cookie } })).status, 404);
+const evidencePdf = await PDFDocument.create(); evidencePdf.addPage(); const evidenceBytes = new Uint8Array(await evidencePdf.save());
+const report = new FormData(); report.set('file', new File([evidenceBytes], 'Example ChexSystems report.pdf', { type: 'application/pdf' })); report.set('kind', 'report'); report.set('bureau', 'chexsystems'); report.set('redacted', 'true');
+const withReport = await req(first.cookie, '/api/documents', 'POST', report, 201); const reportDoc = withReport.documents.find(d => d.name === 'Example ChexSystems report.pdf'); assert.equal(reportDoc.bureau, 'chexsystems'); assert.equal(reportDoc.kind, 'report');
+const evidence = new FormData(); evidence.set('file', new File([evidenceBytes], 'Example closing statement.pdf', { type: 'application/pdf' })); evidence.set('kind', 'supporting'); evidence.set('bureau', 'chexsystems'); evidence.set('disputeId', id); evidence.set('redacted', 'true');
+await req(other.cookie, '/api/documents', 'POST', evidence, 404);
+const withEvidence = await req(first.cookie, '/api/documents', 'POST', evidence, 201); const evidenceDoc = withEvidence.documents.find(d => d.name === 'Example closing statement.pdf'); assert.equal(evidenceDoc.disputeId, id); assert.equal(evidenceDoc.bureau, 'chexsystems');
+const download = await fetch(`${base}/api/documents/${reportDoc.id}`, { headers: { Cookie: first.cookie } }); assert.equal(download.status, 200); assert.deepEqual(new Uint8Array(await download.arrayBuffer()), evidenceBytes);
+const date = days => new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
+await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { status: 'in_review', submissionMethod: 'mail', submittedAt: date(3) }, 400);
+const mailed = await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { status: 'in_review', submissionMethod: 'mail', submittedAt: date(3), actualSubmissionConfirmed: true, reference: 'FICTIONAL-CHEX-001' }); assert.equal(mailed.disputes.find(d => d.id === id).dueAt, null);
+const delivered = await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { action: 'record_delivery', receivedAt: date(1), receivedAtConfirmed: true }); const deliveredRow = delivered.disputes.find(d => d.id === id); assert.equal((new Date(deliveredRow.dueAt) - new Date(deliveredRow.receivedAt)) / 86400000, 30);
+const complaint = { channel: 'cfpb', relatedDisputeId: id, company: 'ChexSystems', companyContact: 'https://www.chexsystems.com/', issue: 'Inaccurate banking consumer report information', details: 'Fictional complaint: the bank account balance discrepancy remains after a direct dispute. Please review the closing statement and correct any inaccurate consumer reporting.', contactHistory: 'A fictional direct dispute was mailed and a delivery acknowledgment received.', desiredResolution: 'Correct the inaccurate balance and provide the written reinvestigation result.', priorDisputeConfirmed: true, priorDisputeDate: date(1), priorDisputeNoLongerPending: false, confirmed: true, privacyAcknowledged: true };
+const waiting = await req(first.cookie, '/api/complaints', 'POST', complaint, 201);
+await req(first.cookie, `/api/complaints/${waiting.createdId}`, 'PATCH', { status: 'in_review', submittedAt: date(0), actualSubmissionConfirmed: true }, 400);
+await req(first.cookie, `/api/complaints/${waiting.createdId}`, 'DELETE');
+const complaintResult = await req(first.cookie, '/api/complaints', 'POST', { ...complaint, priorDisputeDate: date(46) }, 201); assert.equal(complaintResult.complaints.find(c => c.id === complaintResult.createdId).relatedDisputeId, id);
+const resolved = await req(first.cookie, `/api/disputes/${id}`, 'PATCH', { status: 'resolved', resolution: 'Fictional outcome: account history corrected.' }); assert.equal(resolved.disputes.find(d => d.id === id).status, 'resolved');
+const phone = await req(first.cookie, '/api/disputes', 'POST', { ...input, submissionMethod: 'phone' }, 201); const phoneId = phone.createdIds[0];
+const phoneRecorded = await req(first.cookie, `/api/disputes/${phoneId}`, 'PATCH', { status: 'in_review', submissionMethod: 'phone', submittedAt: date(0), actualSubmissionConfirmed: true, reference: 'FICTIONAL-CHEX-PHONE' }); assert.equal(phoneRecorded.disputes.find(d => d.id === phoneId).submissionMethod, 'phone');
+const online = await req(first.cookie, '/api/disputes', 'POST', { ...input, submissionMethod: 'online' }, 201); assert.equal(online.disputes.find(d => d.id === online.createdIds[0]).submissionMethod, 'online');
+await req(first.cookie, `/api/disputes/${id}`, 'DELETE');
+const cleared = await req(first.cookie, '/api/workspace', 'DELETE', { confirm: 'START FRESH' }); assert.equal(cleared.disputes.length, 0); assert.equal(cleared.documents.length, 0); assert.equal(cleared.complaints.length, 0);
+console.log('PASS: ChexSystems saved banking drafts, editing, PDF title, report/evidence uploads, privacy isolation, online/mail/phone routes, delivery-based reminders, banking complaint safeguards, outcomes, and reset.');
